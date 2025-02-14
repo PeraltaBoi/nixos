@@ -15,7 +15,15 @@ This repository contains my NixOS configuration files, including:
   - Helix
   - Emacs (kinda)
   - Git
-  - And more...
+  - And maybe more...
+
+## Screenshots
+
+![Hyprland](./screenshots/desktop.png)
+(no i don't use a bar, but you can find some nice configs online)
+
+![Neovim Setup](./screenshots/neovim.png)
+
 
 ## Prerequisites
 
