@@ -1,0 +1,13 @@
+{ pkgs, ... }:
+
+{
+  programs.nixvim = {
+    plugins = {
+      vim-dadbod.enable = true;
+      vim-dadbod-ui.enable = true;
+      vim-dadbod-completion.enable = true;
+    };
+  };
+
+  home.packages = with pkgs; [ sqlcmd ];
+}

@@ -1,0 +1,36 @@
+{...}:
+
+{
+  programs.nixvim = {
+    enable = true;
+    clipboard.register = "unnamedplus";
+    colorschemes.catppuccin.enable = true;
+    plugins.web-devicons.enable = true;
+    plugins.telescope.enable = true;
+    plugins.nvim-tree.enable = true;
+    plugins.which-key.enable = true;
+
+    globals.mapleader = " ";
+
+    keymaps = [
+      {
+        mode = "n";
+        key = "<leader>sf";
+        options.silent = true;
+        action = "<CMD>Telescope find_files<CR>";
+	options = {
+	  desc = "[S]earch [F]iles";
+	};
+      }
+      {
+        mode = "n";
+        key = "<leader>e";
+        options.silent = true;
+        action = "<CMD>NvimTreeFocus<CR>";
+	options = {
+	  desc = "NvimTr[E]e Focus";
+	};
+      }
+    ];
+  };
+}
