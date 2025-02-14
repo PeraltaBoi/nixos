@@ -19,7 +19,7 @@ This repository contains my NixOS configuration files, including:
 
 ## Screenshots
 
-![Hyprland](./screenshots/desktop.png)
+![Hyprland](./screenshots/hyprland.png)
 (no i don't use a bar, but you can find some nice configs online)
 
 ![Neovim Setup](./screenshots/neovim.png)
