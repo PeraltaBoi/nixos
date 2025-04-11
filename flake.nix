@@ -18,12 +18,12 @@
     catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixvim, catppuccin, ... }: {
+  outputs = { nixpkgs, home-manager, nixvim, catppuccin, ... }: {
     nixosConfigurations = {
       # TODO please change the hostname to your own
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; }; # needed by hyprland
+        # extraSpecialArgs = { theme = "rose-pine"; };
         modules = [
           ./configuration.nix
           catppuccin.nixosModules.catppuccin
@@ -34,6 +34,10 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              theme = "catppuccin";
+              transparent = false;
+            };
 
             home-manager.users.tiago = {
               imports = [

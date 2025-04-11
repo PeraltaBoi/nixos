@@ -2,6 +2,8 @@
 
 My personal NixOS system configuration and home-manager dotfiles.
 
+**This config won't work by itself for now due to the git config missing (i don't want to publish my email), I will look for a fix**
+
 ## Overview
 
 This repository contains my NixOS configuration files, including:

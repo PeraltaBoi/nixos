@@ -69,11 +69,14 @@
           # installRustc = false;
           # installCargo = false;
         };
+        jsonls = { enable = true; };
         ts_ls = { enable = true; };
         eslint = { enable = true; };
         html = { enable = true; };
         tailwindcss = { enable = true; };
         svelte = { enable = true; };
+        protols = { enable = true; };
+        omnisharp = { enable = true; };
       };
     };
 

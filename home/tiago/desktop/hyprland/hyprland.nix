@@ -1,7 +1,26 @@
-{ pkgs, ... }:
+{ pkgs, specialArgs, ... }:
 
-{
-  home.packages = with pkgs; [ hyprsunset hyprshot ];
+let
+  inherit (specialArgs) theme;
+
+  # Map themes to their corresponding GTK themes
+  gtkThemes = {
+    "rose-pine" = {
+      name = "WhiteSur-Light";
+      package = pkgs.whitesur-gtk-theme;
+    };
+    "kanagawa" = {
+      name = "WhiteSur-Dark";
+      package = pkgs.whitesur-gtk-theme;
+    };
+  };
+
+  selectedGtkTheme = if theme == "catppuccin" then
+    null
+  else
+    gtkThemes.${theme} or gtkThemes.rose-pine;
+in {
+  home.packages = with pkgs; [ hyprsunset hyprshot whitesur-gtk-theme ];
 
   programs.kitty.enable = true; # required for the default Hyprland config
   wayland.windowManager.hyprland = {
@@ -155,19 +174,40 @@
     size = 24;
   };
 
+  # programs.firefox = {
+  #   enable = true;
+  #   profiles.default = {
+  #     settings = {
+  #       "font.name.serif.x-western" = "JetBrains Mono";
+  #       "font.name.sans-serif.x-western" = "Adwaita Sans";
+  #       "font.name.monospace.x-western" = "Monospace";
+  #       # "font.size.variable.x-western" = 16;
+  #       # "font.size.monospace.x-western" = 14;
+  #     };
+  #   };
+  # };
+
   gtk = {
     enable = true;
-
-    # theme = { name = "Catppuccin-Mocha"; };
 
     iconTheme = {
       package = pkgs.morewaita-icon-theme;
       name = "MoreWaita";
     };
 
-    font = {
-      name = "Inter";
-      size = 11;
+    theme = if theme == "catppuccin" then
+      { }
+    else {
+      name = selectedGtkTheme.name;
+      package = selectedGtkTheme.package;
     };
+  };
+
+  catppuccin = {
+    enable = theme == "catppuccin";
+    gtk.enable = theme == "catppuccin";
+    nushell.enable = theme == "catppuccin";
+    helix.enable = false;
+    flavor = "mocha";
   };
 }

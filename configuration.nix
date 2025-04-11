@@ -7,7 +7,6 @@
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./stylix.nix
   ];
 
   # Bootloader.
@@ -26,9 +25,22 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  networking.interfaces.enp37s0 = {
+    # remember to disable all of this please
+    wakeOnLan.enable = false;
+    # speed = 100; # Set speed to 100Mbps
+    # duplex = "full"; # Set full duplex
+  };
+
   # Enable bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  # Graphics stuff
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
@@ -94,13 +106,15 @@
       ];
   };
 
-  fonts.packages = with pkgs; [ jetbrains-mono inter ];
+  fonts.packages = with pkgs; [ jetbrains-mono inter adwaita-fonts ];
 
   # Install firefox.
   programs.firefox.enable = true;
 
   # Install hyprland
-  programs.hyprland.enable = true;
+  # programs.hyprland.enable = true;
+  # Enable Niri
+  programs.niri.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -115,14 +129,14 @@
     curl
   ];
 
-  programs.fish.enable = true;
+  environment.shells = [ pkgs.nushell ];
 
   programs.bash = {
     interactiveShellInit = ''
-      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "nu" && -z ''${BASH_EXECUTION_STRING} ]]
       then
         shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+        exec ${pkgs.nushell}/bin/nu $LOGIN_OPTION
       fi
     '';
   };

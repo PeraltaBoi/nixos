@@ -1,6 +1,7 @@
-{ ... }: {
+{ pkgs, ... }: {
   programs.emacs = {
     enable = true;
+    package = pkgs.emacs-gtk;
     extraPackages = epkgs:
       with epkgs; [
         # Core
@@ -9,12 +10,26 @@
         counsel
         ivy
         swiper
+        vertico # Completions
+        consult # previews
+        prescient # history based priority
+        corfu # idk
+        orderless
+        marginalia
+        cape
+        embark
+        spacious-padding
+
+        # Modes!
+        meow
+
+        # Stuff from lamdbaland
+        avy
+        embark
+        jinx
 
         # Development
         magit # Git integration
-        projectile
-        company # Completion framework
-        flycheck # Syntax checking
 
         # Themes
         doom-themes
@@ -28,67 +43,108 @@
         json-mode
       ];
     extraConfig = ''
-                  ;; Basic UI configuration
-                  (menu-bar-mode -1)
-                  (tool-bar-mode -1)
-                  (scroll-bar-mode -1)
-                  (global-display-line-numbers-mode 1)
+      ;; Basic UI configuration
+      (menu-bar-mode -1)
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)
+      (global-display-line-numbers-mode 1)
+      ;; Font configuration
+      (set-face-attribute 'default nil
+        :family "JetBrains Mono"
+        :weight 'extra-bold
+        :height 150)
 
-      				    ;; Font configuration
-      						(set-face-attribute 'default nil
-      																:family "JetBrains Mono"
-      																:weight 'extra-bold
-      																:height 150)
+      ;; Theme setup
+      (use-package catppuccin-theme
+        :config
+        (load-theme 'catppuccin t))
 
-                  ;; Use-package configuration
-                  (require 'use-package)
-                  (setq use-package-always-ensure t)
+      (require 'meow)
 
-                  ;; Theme setup
-                  ;;(use-package doom-themes
-                  ;;  :config
-                  ;;  (load-theme 'doom-one t))
-
-            			;; Theme setup
-                  (use-package catppuccin-theme
-                    :config
-                    (load-theme 'catppuccin t))
-
-                  ;; Which-key setup
-                  (use-package which-key
-                    :config
-                    (which-key-mode))
-
-                  ;; Ivy/Counsel/Swiper setup
-                  (use-package ivy
-                    :config
-                    (ivy-mode 1)
-                    (setq ivy-use-virtual-buffers t)
-                    (setq enable-recursive-minibuffers t))
-
-                  (use-package counsel
-                    :config
-                    (counsel-mode 1))
-
-                  ;; Company mode setup
-                  (use-package company
-                    :hook
-                    (after-init . global-company-mode))
-
-                  ;; Projectile setup
-                  (use-package projectile
-                    :config
-                    (projectile-mode +1)
-                    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
-
-                  ;; Magit setup
-                  (use-package magit
-                    :bind ("C-x g" . magit-status))
-
-                  ;; Custom keybindings
-                  (global-set-key (kbd "C-s") 'swiper)
-                  (global-set-key (kbd "M-x") 'counsel-M-x)
-                  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+      (defun meow-setup ()
+        (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+        (meow-motion-define-key
+         '("j" . meow-next)
+         '("k" . meow-prev)
+         '("<escape>" . ignore))
+        (meow-leader-define-key
+         ;; Use SPC (0-9) for digit arguments.
+         '("1" . meow-digit-argument)
+         '("2" . meow-digit-argument)
+         '("3" . meow-digit-argument)
+         '("4" . meow-digit-argument)
+         '("5" . meow-digit-argument)
+         '("6" . meow-digit-argument)
+         '("7" . meow-digit-argument)
+         '("8" . meow-digit-argument)
+         '("9" . meow-digit-argument)
+         '("0" . meow-digit-argument)
+         '("/" . meow-keypad-describe-key)
+         '("?" . meow-cheatsheet))
+        (meow-normal-define-key
+         '("0" . meow-expand-0)
+         '("9" . meow-expand-9)
+         '("8" . meow-expand-8)
+         '("7" . meow-expand-7)
+         '("6" . meow-expand-6)
+         '("5" . meow-expand-5)
+         '("4" . meow-expand-4)
+         '("3" . meow-expand-3)
+         '("2" . meow-expand-2)
+         '("1" . meow-expand-1)
+         '("-" . negative-argument)
+         '(";" . meow-reverse)
+         '("," . meow-inner-of-thing)
+         '("." . meow-bounds-of-thing)
+         '("[" . meow-beginning-of-thing)
+         '("]" . meow-end-of-thing)
+         '("a" . meow-append)
+         '("A" . meow-open-below)
+         '("b" . meow-back-word)
+         '("B" . meow-back-symbol)
+         '("c" . meow-change)
+         '("d" . meow-delete)
+         '("D" . meow-backward-delete)
+         '("e" . meow-next-word)
+         '("E" . meow-next-symbol)
+         '("f" . meow-find)
+         '("g" . meow-cancel-selection)
+         '("G" . meow-grab)
+         '("h" . meow-left)
+         '("H" . meow-left-expand)
+         '("i" . meow-insert)
+         '("I" . meow-open-above)
+         '("j" . meow-next)
+         '("J" . meow-next-expand)
+         '("k" . meow-prev)
+         '("K" . meow-prev-expand)
+         '("l" . meow-right)
+         '("L" . meow-right-expand)
+         '("m" . meow-join)
+         '("n" . meow-search)
+         '("o" . meow-block)
+         '("O" . meow-to-block)
+         '("p" . meow-yank)
+         '("q" . meow-quit)
+         '("Q" . meow-goto-line)
+         '("r" . meow-replace)
+         '("R" . meow-swap-grab)
+         '("s" . meow-kill)
+         '("t" . meow-till)
+         '("u" . meow-undo)
+         '("U" . meow-undo-in-selection)
+         '("v" . meow-visit)
+         '("w" . meow-mark-word)
+         '("W" . meow-mark-symbol)
+         '("x" . meow-line)
+         '("X" . meow-goto-line)
+         '("y" . meow-save)
+         '("Y" . meow-sync-grab)
+         '("z" . meow-pop-selection)
+         '("'" . repeat)
+         '("<escape>" . ignore)))
+      (meow-setup)
+      (meow-global-mode 1)
     '';
   };
 }

@@ -5,7 +5,6 @@
     plugins.lualine = {
       enable = true;
       settings = {
-        theme = "catppuccin";
         options.component_separators = {
           left = "";
           right = "";

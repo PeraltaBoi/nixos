@@ -12,6 +12,16 @@
     resources
     fractal
     hypnotix
+    ffmpeg
+    fragments
+    p7zip
+    krunker
+    kodi
+    prismlauncher
+    glfw
+    spotify-player
+    xwayland-satellite
+    zenity
 
     dconf-editor
     polkit_gnome
@@ -23,16 +33,23 @@
     audacity
     ardour
     cambalache
+    yazi
+    jetbrains.rider
 
     nitch
 
     ripgrep
+    fzf
     fd
     neofetch
     dbeaver-bin
     cartero
 
-    # development
+    # dev tools
+    lazygit
+    jujutsu
+
+    # LSPs and such
     cargo
     rustc
     bun
@@ -40,5 +57,18 @@
     dotnetCorePackages.dotnet_8.sdk
     tailwindcss
     nodePackages.prettier
+    nodePackages.vscode-json-languageserver
+    nixd
+    nixfmt
+    vscode-langservers-extracted
+    tailwindcss-language-server
+    typescript-language-server
+    eslint
+    rust-analyzer
+    rustfmt
+    clippy
+    protols
+    omnisharp-roslyn
+    netcoredbg
   ];
 }

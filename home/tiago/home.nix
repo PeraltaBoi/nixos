@@ -3,15 +3,17 @@
 {
   imports = [ ./code ./desktop ];
 
-  catppuccin = {
-    enable = true;
-    gtk.enable = true;
-    flavor = "mocha";
-  };
-  dconf.settings = {
-    "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
-  };
+  # catppuccin = {
+  #   enable = true;
+  #   gtk.enable = false;
+  #   flavor = "mocha";
+  # };
+  # dconf.settings = {
+  #   "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
+  # };
 
+  home.shell.enableShellIntegration = true;
+  
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home.username = "tiago";
