@@ -99,7 +99,7 @@
   users.users.tiago = {
     isNormalUser = true;
     description = "Tiago Peralta";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs;
       [
         #  thunderbird
@@ -128,6 +128,11 @@
     wget
     curl
   ];
+
+  # Enable docker
+  virtualisation.docker = { enable = true; };
+
+  programs.ssh.startAgent = true;
 
   environment.shells = [ pkgs.nushell ];
 

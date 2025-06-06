@@ -77,6 +77,30 @@
         svelte = { enable = true; };
         protols = { enable = true; };
         omnisharp = { enable = true; };
+        jdtls = {
+          enable = true;
+          settings = {
+            java = {
+              jdt.ls = {
+                vmargs = [
+                  "--jvm-arg=-javaagent:${pkgs.lombok}/share/java/lombok.jar"
+                  ".. -javaagent:${pkgs.lombok}/share/java/lombok.jar"
+                  "-XX:+UseParallelGC"
+                  "-XX:GCTimeRatio=4"
+                  "-XX:AdaptiveSizePolicyWeight=90"
+                  "-Dsun.zip.disableMemoryMapping=true"
+                  "-Xmx1G"
+                  "-Xms100m"
+                  "--add-modules=ALL-SYSTEM"
+                  "--add-opens"
+                  "java.base/java.util=ALL-UNNAMED"
+                  "--add-opens"
+                  "java.base/java.lang=ALL-UNNAMED"
+                ];
+              };
+            };
+          };
+        };
       };
     };
 
@@ -159,7 +183,7 @@
     cargo
     rustc
     bun
-    nodejs_23
+    nodejs_22
     nixd
     nixfmt
     vscode-langservers-extracted
@@ -168,6 +192,7 @@
     eslint
     rust-analyzer
     rustfmt
+    jdt-language-server
+    lombok
   ];
-
 }

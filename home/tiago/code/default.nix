@@ -6,6 +6,7 @@
     ./git.nix
     ./helix.nix
     ./nushell.nix
+    ./zellij.nix
     # ./vscode.nix
     # ./nvim.nix
     ./neovim

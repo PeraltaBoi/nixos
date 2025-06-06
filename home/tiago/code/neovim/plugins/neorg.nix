@@ -15,6 +15,7 @@
               default_workspace = "notes";
             };
           };
+          "core.export" = { __empty = null; };
         };
       };
     };

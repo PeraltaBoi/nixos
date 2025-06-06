@@ -3,12 +3,15 @@
 {
   home.packages = with pkgs; [
     wl-clipboard
+    xdg-desktop-portal
+    xdg-desktop-portal-gnome
     cliphist
     ungoogled-chromium
     fuzzel
     vlc
     vesktop
     pinta
+    gimp
     resources
     fractal
     hypnotix
@@ -22,6 +25,8 @@
     spotify-player
     xwayland-satellite
     zenity
+    stremio
+    deluge
 
     dconf-editor
     polkit_gnome
@@ -35,6 +40,7 @@
     cambalache
     yazi
     jetbrains.rider
+    jetbrains.idea-community
 
     nitch
 
@@ -53,8 +59,9 @@
     cargo
     rustc
     bun
-    nodejs_23
+    nodejs_22
     dotnetCorePackages.dotnet_8.sdk
+    dotnet-ef
     tailwindcss
     nodePackages.prettier
     nodePackages.vscode-json-languageserver
@@ -69,6 +76,16 @@
     clippy
     protols
     omnisharp-roslyn
+    csharp-ls
     netcoredbg
+    jdk23
+    maven
+    docker-compose
   ];
+
+  # Set environment variables to ensure .NET 8 is the default
+  home.sessionVariables = {
+    DOTNET_ROOT = "${pkgs.dotnetCorePackages.dotnet_8.sdk}/share/dotnet";
+    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+  };
 }

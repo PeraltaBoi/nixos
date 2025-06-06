@@ -1,4 +1,4 @@
-{ specialArgs, ... }:
+{ pkgs, specialArgs, ... }:
 
 let
   inherit (specialArgs) theme transparent;
@@ -73,6 +73,10 @@ in {
     languages = {
       language = [
         {
+          name = "java";
+          language-servers = [ "jdtls" ];
+        }
+        {
           name = "typescript";
           language-servers = [
             "tailwindcss-language-server"
@@ -89,6 +93,14 @@ in {
           ];
         }
       ];
+
+      language-server.jdtls = {
+        command = "jdtls";
+        args = [ "--jvm-arg=-javaagent:${pkgs.lombok}/share/java/lombok.jar" ];
+      };
+
+      language-server = { omnisharp = { timeout = 200000; }; };
+
     };
   };
 }

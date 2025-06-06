@@ -10,6 +10,8 @@
       vim.cmd [[set autoindent]]
     '';
 
+    diagnostics = { virtual_text = true; };
+
     opts = {
       mouse = "a";
       tabstop = 2;

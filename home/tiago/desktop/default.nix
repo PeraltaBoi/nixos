@@ -7,5 +7,6 @@
     ./fontconfig.nix
     # ./firefox.nix
     ./packages.nix
+    ./zen.nix
   ];
 }

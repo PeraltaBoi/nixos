@@ -4,6 +4,7 @@
   programs.nixvim = {
     plugins.telescope = {
       enable = true;
+      defaults = { path_display = [ "truncate" ]; };
       extensions = {
         fzf-native.enable = true;
         frecency.enable = true;
