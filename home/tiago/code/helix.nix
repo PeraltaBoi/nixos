@@ -94,12 +94,28 @@ in {
         }
       ];
 
+      language-server.eslint = {
+        command = "vscode-eslint-language-server";
+        args = [ "--stdio" ];
+        config = {
+          validate = "on";
+          experimental = { useFlatConfig = false; };
+          rulesCustomizations = [ ];
+          run = "onType";
+          problems = { shortenToSingleLine = false; };
+          nodePath = "";
+        };
+      };
+
       language-server.jdtls = {
         command = "jdtls";
         args = [ "--jvm-arg=-javaagent:${pkgs.lombok}/share/java/lombok.jar" ];
       };
 
-      language-server = { omnisharp = { timeout = 200000; }; };
+      language-server.omnisharp = {
+        args = [ "--languageserver" ];
+        timeout = 200000;
+      };
 
     };
   };

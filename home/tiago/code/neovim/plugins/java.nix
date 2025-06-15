@@ -1,5 +1,5 @@
 { ... }:
 
 {
-  programs.nixvim = { plugins.java.enable = true; };
+  # programs.nixvim = { plugins.java.enable = true; };
 }
