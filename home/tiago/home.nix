@@ -1,23 +1,24 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
-  imports = [ ./code ./desktop ];
+  imports = [
+    ./code
+    ./desktop
+    ./theme
+  ];
 
-  # catppuccin = {
-  #   enable = true;
-  #   gtk.enable = false;
-  #   flavor = "mocha";
-  # };
   # dconf.settings = {
   #   "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
   # };
 
   home.shell.enableShellIntegration = true;
-  
+
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home.username = "tiago";
   home.homeDirectory = "/home/tiago";
+
+  systemTheme.name = "dark";
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -32,4 +33,3 @@
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
-

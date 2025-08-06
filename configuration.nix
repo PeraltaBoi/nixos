@@ -5,7 +5,8 @@
 { pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -13,7 +14,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -99,14 +103,21 @@
   users.users.tiago = {
     isNormalUser = true;
     description = "Tiago Peralta";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs;
-      [
-        #  thunderbird
-      ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
+    packages = with pkgs; [
+      #  thunderbird
+    ];
   };
 
-  fonts.packages = with pkgs; [ jetbrains-mono inter adwaita-fonts ];
+  fonts.packages = with pkgs; [
+    jetbrains-mono
+    inter
+    adwaita-fonts
+  ];
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -119,7 +130,11 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  programs.steam = { enable = true; };
+  programs.steam = {
+    enable = true;
+  };
+
+  virtualisation.waydroid.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -130,9 +145,11 @@
   ];
 
   # Enable docker
-  virtualisation.docker = { enable = true; };
+  virtualisation.docker = {
+    enable = true;
+  };
 
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
 
   environment.shells = [ pkgs.nushell ];
 

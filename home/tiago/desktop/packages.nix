@@ -11,7 +11,7 @@
     vlc
     vesktop
     pinta
-    gimp
+    # gimp
     resources
     fractal
     hypnotix
@@ -21,12 +21,15 @@
     krunker
     kodi
     prismlauncher
+    mangohud
     glfw
     spotify-player
     xwayland-satellite
     zenity
     stremio
     deluge
+    blender
+    mindustry-wayland
 
     dconf-editor
     polkit_gnome
@@ -39,8 +42,6 @@
     ardour
     cambalache
     yazi
-    jetbrains.rider
-    jetbrains.idea-community
 
     nitch
 
@@ -54,6 +55,7 @@
     # dev tools
     lazygit
     jujutsu
+    hoppscotch
 
     # LSPs and such
     cargo
@@ -64,7 +66,6 @@
     dotnet-ef
     tailwindcss
     nodePackages.prettier
-    nodePackages.vscode-json-languageserver
     nixd
     nixfmt
     vscode-langservers-extracted
@@ -78,14 +79,7 @@
     omnisharp-roslyn
     csharp-ls
     netcoredbg
-    jdk23
     maven
     docker-compose
   ];
-
-  # Set environment variables to ensure .NET 8 is the default
-  home.sessionVariables = {
-    DOTNET_ROOT = "${pkgs.dotnetCorePackages.dotnet_8.sdk}/share/dotnet";
-    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
-  };
 }

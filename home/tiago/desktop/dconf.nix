@@ -1,17 +1,4 @@
-{ pkgs, specialArgs, ... }:
-
-let
-  inherit (specialArgs) theme;
-
-  # Map themes to their preferred color schemes
-  colorSchemes = {
-    "rose-pine" = "prefer-light";
-    "kanagawa" = "prefer-dark";
-    "catppuccin" = "prefer-dark";
-  };
-
-  selectedColorScheme = colorSchemes.${theme} or colorSchemes.rose-pine;
-in {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     adw-gtk3
     gnome-tweaks
@@ -23,7 +10,7 @@ in {
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      color-scheme = selectedColorScheme;
+      color-scheme = "catppuccin";
       font-name = "Adwaita Sans 11";
       monospace-font-name = "Adwaita Mono 11";
       document-font-name = "Adwaita Sans 11";

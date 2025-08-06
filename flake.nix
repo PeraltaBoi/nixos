@@ -34,7 +34,6 @@
         # TODO please change the hostname to your own
         nixos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          # extraSpecialArgs = { theme = "rose-pine"; };
           modules = [
             ./configuration.nix
             catppuccin.nixosModules.catppuccin
@@ -45,11 +44,6 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                theme = "catppuccin";
-                transparent = false;
-              };
-
               home-manager.users.tiago = {
                 imports = [
                   ./home/tiago/home.nix

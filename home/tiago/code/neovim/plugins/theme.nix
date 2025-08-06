@@ -1,14 +1,13 @@
-{ specialArgs, lib, ... }:
+{ ... }:
 
 let
-  inherit (specialArgs) theme transparent;
   themeConfigs = {
     catppuccin = {
       colorschemes.catppuccin = {
         enable = true;
         settings = {
           integrations = { blink_cmp = true; };
-          transparent_background = transparent;
+          transparent_background = false;
           custom_highlights = ''
             function(colors)
               return {
@@ -26,7 +25,7 @@ let
       colorschemes.kanagawa = {
         enable = true;
         settings = {
-          transparent = transparent;
+          transparent = false;
           colors = { theme = { all = { ui.bg_gutter = "none"; }; }; };
           overrides = ''
             function(colors)
@@ -83,9 +82,9 @@ let
         enable = true;
         settings = {
           variant = "dawn";
-          styles.transparency = transparent;
+          styles.transparency = false;
         };
       };
     };
   };
-in { programs.nixvim = themeConfigs.${theme} or themeConfigs.catppuccin; }
+in { programs.nixvim = themeConfigs.catppuccin; }

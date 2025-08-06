@@ -1,12 +1,17 @@
-{ pkgs, specialArgs, ... }:
+{ ... }:
 
-let inherit (specialArgs) theme;
-in {
+{
   programs.nushell = {
     enable = true;
-    settings = { completions = { }; };
-    environmentVariables = { EDITOR = "hx"; };
+    settings = {
+      completions = { };
+      show_banner = false;
+    };
+    environmentVariables = {
+      EDITOR = "hx";
+    };
     extraConfig = ''
+      nitch
       let carapace_completer = {|spans|
         carapace $spans.0 nushell ...$spans | from json
       }
@@ -17,7 +22,7 @@ in {
 
       let multiple_completers = {|spans|
         # if the current command is an alias, get it's expansion
-        let expanded_alias = (scope aliases | where name == $spans.0 | get -i 0 | get -i expansion)
+        let expanded_alias = (scope aliases | where name == $spans.0 | get --optional 0 | get --optional expansion)
 
         # overwrite
         let spans = (if $expanded_alias != null  {

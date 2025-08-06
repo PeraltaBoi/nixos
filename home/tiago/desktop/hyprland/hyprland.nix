@@ -1,26 +1,11 @@
-{ pkgs, specialArgs, ... }:
+{ pkgs, ... }:
 
-let
-  inherit (specialArgs) theme;
-
-  # Map themes to their corresponding GTK themes
-  gtkThemes = {
-    "rose-pine" = {
-      name = "WhiteSur-Light";
-      package = pkgs.whitesur-gtk-theme;
-    };
-    "kanagawa" = {
-      name = "WhiteSur-Dark";
-      package = pkgs.whitesur-gtk-theme;
-    };
-  };
-
-  selectedGtkTheme = if theme == "catppuccin" then
-    null
-  else
-    gtkThemes.${theme} or gtkThemes.rose-pine;
-in {
-  home.packages = with pkgs; [ hyprsunset hyprshot whitesur-gtk-theme ];
+{
+  home.packages = with pkgs; [
+    hyprsunset
+    hyprshot
+    whitesur-gtk-theme
+  ];
 
   programs.kitty.enable = true; # required for the default Hyprland config
   wayland.windowManager.hyprland = {
@@ -84,17 +69,23 @@ in {
         "$mainMod, l, movefocus, r"
         "$mainMod, k, movefocus, u"
         "$mainMod, j, movefocus, d"
-      ] ++ (
+      ]
+      ++ (
         # workspaces
         # binds $mainMod + [shift +] {1..9} to [move to] workspace {1..9}
-        builtins.concatLists (builtins.genList (i:
-          let ws = i + 1;
-          in [
-            "$mainMod, code:1${toString i}, workspace, ${toString ws}"
-            "$mainMod SHIFT, code:1${toString i}, movetoworkspacesilent, ${
-              toString ws
-            }"
-          ]) 9));
+        builtins.concatLists (
+          builtins.genList (
+            i:
+            let
+              ws = i + 1;
+            in
+            [
+              "$mainMod, code:1${toString i}, workspace, ${toString ws}"
+              "$mainMod SHIFT, code:1${toString i}, movetoworkspacesilent, ${toString ws}"
+            ]
+          ) 9
+        )
+      );
 
       monitor = [
         "DP-1,2560x1440@155,1920x2160,1"
@@ -160,10 +151,14 @@ in {
           # blurls = waybar
         };
 
-        shadow = { enabled = false; };
+        shadow = {
+          enabled = false;
+        };
       };
 
-      misc = { disable_hyprland_logo = true; };
+      misc = {
+        disable_hyprland_logo = true;
+      };
     };
   };
   home.pointerCursor = {
@@ -194,19 +189,12 @@ in {
       package = pkgs.morewaita-icon-theme;
       name = "MoreWaita";
     };
-
-    theme = if theme == "catppuccin" then
-      { }
-    else {
-      name = selectedGtkTheme.name;
-      package = selectedGtkTheme.package;
-    };
   };
 
   catppuccin = {
-    enable = theme == "catppuccin";
-    gtk.enable = theme == "catppuccin";
-    nushell.enable = theme == "catppuccin";
+    # enable = true;
+    # gtk.enable = true;
+    nushell.enable = true;
     helix.enable = false;
     flavor = "mocha";
   };

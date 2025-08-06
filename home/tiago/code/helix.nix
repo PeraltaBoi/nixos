@@ -1,51 +1,6 @@
-{ pkgs, specialArgs, ... }:
+{ pkgs, ... }:
 
-let
-  inherit (specialArgs) theme transparent;
-
-  themeMapping = {
-    "rose-pine" = "rose_pine_dawn";
-    "kanagawa" = "kanagawa";
-    "catppuccin" = "catppuccin_mocha";
-  };
-
-  # Custom theme definitions
-  customThemes = if transparent then {
-    catppuccin_mocha = {
-      inherits = "catppuccin_mocha";
-      "ui.background" = "none";
-      "ui.popup" = { bg = "none"; };
-      "ui.popup.info" = { bg = "none"; };
-      "ui.menu" = { bg = "none"; };
-      "ui.menu.selected" = { bg = "#313244AA"; };
-      "ui.statusline" = { bg = "none"; };
-      "ui.statusline.inactive" = { bg = "none"; };
-    };
-    kanagawa = {
-      inherits = "kanagawa";
-      "ui.background" = "none";
-      "ui.popup" = { bg = "none"; };
-      "ui.popup.info" = { bg = "none"; };
-      "ui.menu" = { bg = "none"; };
-      "ui.menu.selected" = { bg = "#2D4F67AA"; };
-      "ui.statusline" = { bg = "none"; };
-      "ui.statusline.inactive" = { bg = "none"; };
-    };
-    rose_pine_dawn = {
-      inherits = "rose_pine_dawn";
-      "ui.background" = "none";
-      "ui.popup" = { bg = "none"; };
-      "ui.popup.info" = { bg = "none"; };
-      "ui.menu" = { bg = "none"; };
-      "ui.menu.selected" = { bg = "#dfdad9AA"; };
-      "ui.statusline" = { bg = "none"; };
-      "ui.statusline.inactive" = { bg = "none"; };
-    };
-  } else
-    { };
-
-  selectedTheme = themeMapping.${theme} or themeMapping.rose-pine;
-in {
+{
   programs.helix = {
     enable = true;
     defaultEditor = true;
@@ -66,10 +21,8 @@ in {
           other-lines = "hint";
         };
       };
-    } // {
-      theme = selectedTheme;
+      theme = "catppuccin_mocha";
     };
-    themes = customThemes;
     languages = {
       language = [
         {
@@ -117,6 +70,12 @@ in {
         timeout = 200000;
       };
 
+      languages.language-server.rust-analyzer = {
+        config = {
+          cargo.features = "all";
+          check.command = "clippy";
+        };
+      };
     };
   };
 }

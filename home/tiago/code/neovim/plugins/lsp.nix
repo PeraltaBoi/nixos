@@ -2,6 +2,8 @@
 
 {
   programs.nixvim = {
+    extraPlugins = [ pkgs.vimPlugins.Ionide-vim ];
+
     plugins.conform-nvim = {
       enable = true;
       settings = {
@@ -60,7 +62,9 @@
       enable = true;
       inlayHints = false;
       servers = {
-        nixd = { enable = true; };
+        nixd = {
+          enable = true;
+        };
         rust_analyzer = {
           enable = true;
           settings = {
@@ -69,14 +73,30 @@
           # installRustc = false;
           # installCargo = false;
         };
-        jsonls = { enable = true; };
-        ts_ls = { enable = true; };
-        eslint = { enable = true; };
-        html = { enable = true; };
-        tailwindcss = { enable = true; };
-        svelte = { enable = true; };
-        protols = { enable = true; };
-        omnisharp = { enable = true; };
+        jsonls = {
+          enable = true;
+        };
+        ts_ls = {
+          enable = true;
+        };
+        eslint = {
+          enable = true;
+        };
+        html = {
+          enable = true;
+        };
+        tailwindcss = {
+          enable = true;
+        };
+        svelte = {
+          enable = true;
+        };
+        protols = {
+          enable = true;
+        };
+        omnisharp = {
+          enable = true;
+        };
         jdtls = {
           enable = true;
           settings = {
@@ -113,68 +133,95 @@
             require('conform').format { async = true, lsp_fallback = true }
           end
         '';
-        options = { desc = "[F]ormat buffer"; };
+        options = {
+          desc = "[F]ormat buffer";
+        };
       }
       {
         mode = "n";
         key = "gd";
         action.__raw = "require('telescope.builtin').lsp_definitions";
-        options = { desc = "LSP: [G]oto [D]efinition"; };
+        options = {
+          desc = "LSP: [G]oto [D]efinition";
+        };
       }
       {
         mode = "n";
         key = "gr";
         action.__raw = "require('telescope.builtin').lsp_references";
-        options = { desc = "LSP: [G]oto [R]eferences"; };
+        options = {
+          desc = "LSP: [G]oto [R]eferences";
+        };
       }
       {
         mode = "n";
         key = "gI";
         action.__raw = "require('telescope.builtin').lsp_implementations";
-        options = { desc = "LSP: [G]oto [I]mplementation"; };
+        options = {
+          desc = "LSP: [G]oto [I]mplementation";
+        };
       }
       {
         mode = "n";
         key = "<leader>D";
         action.__raw = "require('telescope.builtin').lsp_type_definitions";
-        options = { desc = "LSP: Type [D]efinition"; };
+        options = {
+          desc = "LSP: Type [D]efinition";
+        };
       }
       {
         mode = "n";
         key = "<leader>ds";
         action.__raw = "require('telescope.builtin').lsp_document_symbols";
-        options = { desc = "LSP: [D]ocument [S]ymbols"; };
+        options = {
+          desc = "LSP: [D]ocument [S]ymbols";
+        };
       }
       {
         mode = "n";
         key = "<leader>ws";
-        action.__raw =
-          "require('telescope.builtin').lsp_dynamic_workspace_symbols";
-        options = { desc = "LSP: [W]orkspace [S]ymbols"; };
+        action.__raw = "require('telescope.builtin').lsp_dynamic_workspace_symbols";
+        options = {
+          desc = "LSP: [W]orkspace [S]ymbols";
+        };
       }
       {
         mode = "n";
         key = "<leader>rn";
         action.__raw = "vim.lsp.buf.rename";
-        options = { desc = "LSP: [R]e[n]ame"; };
+        options = {
+          desc = "LSP: [R]e[n]ame";
+        };
       }
       {
-        mode = [ "n" "x" ];
+        mode = [
+          "n"
+          "x"
+        ];
         key = "<leader>ca";
         action.__raw = "vim.lsp.buf.code_action";
-        options = { desc = "LSP: [C]ode [A]ction"; };
+        options = {
+          desc = "LSP: [C]ode [A]ction";
+        };
       }
       {
         mode = "n";
         key = "gD";
         action.__raw = "vim.lsp.buf.declaration";
-        options = { desc = "LSP: [G]oto [D]eclaration"; };
+        options = {
+          desc = "LSP: [G]oto [D]eclaration";
+        };
       }
       {
-        mode = [ "n" "x" ];
+        mode = [
+          "n"
+          "x"
+        ];
         key = "<leader>ca";
         action.__raw = "vim.lsp.buf.code_action";
-        options = { desc = "LSP: [C]ode [A]ction"; };
+        options = {
+          desc = "LSP: [C]ode [A]ction";
+        };
       }
     ];
   };
@@ -194,5 +241,7 @@
     rustfmt
     jdt-language-server
     lombok
+    fsautocomplete
+    fantomas
   ];
 }
