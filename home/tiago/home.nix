@@ -4,7 +4,7 @@
   imports = [
     ./code
     ./desktop
-    ./theme
+    ./theme.nix
   ];
 
   # dconf.settings = {

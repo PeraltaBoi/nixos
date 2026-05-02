@@ -10,7 +10,7 @@
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      color-scheme = "catppuccin";
+      # color-scheme = "catppuccin";
       font-name = "Adwaita Sans 11";
       monospace-font-name = "Adwaita Mono 11";
       document-font-name = "Adwaita Sans 11";

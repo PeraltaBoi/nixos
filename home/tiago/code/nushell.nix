@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.nushell = {
@@ -9,6 +9,7 @@
     };
     environmentVariables = {
       EDITOR = "hx";
+      JAVA_HOME = "${pkgs.jdk25}";
     };
     extraConfig = ''
       nitch
@@ -36,6 +37,8 @@
             _ => $carapace_completer
         } | do $in $spans
       }
+
+      $env.PATH = $env.PATH ++ ['/home/tiago/.cargo/bin']
     '';
   };
 

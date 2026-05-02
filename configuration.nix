@@ -29,16 +29,16 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  networking.interfaces.enp37s0 = {
-    # remember to disable all of this please
-    wakeOnLan.enable = false;
-    # speed = 100; # Set speed to 100Mbps
-    # duplex = "full"; # Set full duplex
-  };
-
   # Enable bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  services.usbmuxd.enable = true;
+  services.udev = {
+    packages = with pkgs; [
+      qmk-udev-rules
+    ];
+  };
 
   # Graphics stuff
   hardware.graphics = {
@@ -89,7 +89,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -117,6 +117,10 @@
     jetbrains-mono
     inter
     adwaita-fonts
+    material-icons
+    material-symbols
+    nerd-fonts.jetbrains-mono
+    roboto
   ];
 
   # Install firefox.
@@ -127,11 +131,18 @@
   # Enable Niri
   programs.niri.enable = true;
 
+  # enable qt for quickshell stuff
+  qt.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   programs.steam = {
     enable = true;
+    protontricks.enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
   };
 
   virtualisation.waydroid.enable = true;
@@ -142,6 +153,9 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
+    quickshell
+    libimobiledevice
+    pipewire
   ];
 
   # Enable docker
@@ -153,6 +167,13 @@
 
   environment.shells = [ pkgs.nushell ];
 
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 14d --keep 10";
+    flake = "/home/tiago/.config/nixos"; # sets NH_OS_FLAKE variable for you
+  };
+
   programs.bash = {
     interactiveShellInit = ''
       if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "nu" && -z ''${BASH_EXECUTION_STRING} ]]
@@ -161,6 +182,25 @@
         exec ${pkgs.nushell}/bin/nu $LOGIN_OPTION
       fi
     '';
+  };
+
+  services.flatpak.enable = true;
+
+  programs.dms-shell = {
+    enable = true;
+
+    systemd = {
+      enable = true; # Systemd service for auto-start
+      restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
+    };
+
+    # Core features
+    enableSystemMonitoring = true; # System monitoring widgets (dgop)
+    # enableClipboard = true; # Clipboard history manager
+    # enableVPN = true; # VPN management widget
+    # enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+    enableAudioWavelength = true; # Audio visualizer (cava)
+    # enableCalendarEvents = true; # Calendar integration (khal)
   };
 
   # Some programs need SUID wrappers, can be configured further or are

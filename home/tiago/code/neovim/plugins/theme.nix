@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 let
   themeConfigs = {
@@ -8,6 +8,26 @@ let
         settings = {
           integrations = { blink_cmp = true; };
           transparent_background = false;
+          custom_highlights = ''
+            function(colors)
+              return {
+                BlinkCmpMenu = { bg = colors.base },
+                BlinkCmpMenuBorder = { bg = colors.base },
+                BlinkCmpDoc = { bg = colors.base },
+                BlinkCmpDocBorder = { bg = colors.base },
+              }
+            end
+          '';
+        };
+      };
+    };
+    catppuccin-light = {
+      colorschemes.catppuccin = {
+        enable = true;
+        settings = {
+          integrations = { blink_cmp = true; };
+          transparent_background = false;
+          flavour = "latte";
           custom_highlights = ''
             function(colors)
               return {
@@ -86,5 +106,10 @@ let
         };
       };
     };
+    oxocarbon = {
+      colorschemes.oxocarbon = {
+        enable = true;
+      };
+    };
   };
-in { programs.nixvim = themeConfigs.catppuccin; }
+in { programs.nixvim = themeConfigs.${config.systemTheme.settings.nvimColorscheme}; }

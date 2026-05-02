@@ -22,6 +22,8 @@
 
     catppuccin.url = "github:catppuccin/nix";
 
+    helix-steel.url = "github:mattwparas/helix/steel-event-system";
+
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,7 +31,18 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, nixvim, nvf, catppuccin, zen-browser, ... }: {
+    {
+      nixpkgs,
+      home-manager,
+      nixvim,
+      nvf,
+      catppuccin,
+      helix-steel,
+      zen-browser,
+      ...
+    }:
+    # }@inputs:
+    {
       nixosConfigurations = {
         # TODO please change the hostname to your own
         nixos = nixpkgs.lib.nixosSystem {
@@ -43,12 +56,14 @@
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
+              # home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.extraSpecialArgs = { inherit helix-steel; };
               home-manager.useUserPackages = true;
               home-manager.users.tiago = {
                 imports = [
                   ./home/tiago/home.nix
-                  catppuccin.homeManagerModules.catppuccin
-                  nixvim.homeManagerModules.nixvim
+                  catppuccin.homeModules.catppuccin
+                  nixvim.homeModules.nixvim
                   nvf.homeManagerModules.default
                   zen-browser.homeModules.twilight
                 ];

@@ -1,4 +1,3 @@
-# ~/.config/home-manager/modules/theme.nix
 {
   config,
   pkgs,
@@ -10,25 +9,31 @@ let
   themeDefinitions = {
     light = {
       gtkThemeName = "Adwaita";
-      gtkThemePackage = pkgs.adwaita-qt;
-      iconThemeName = "Adwaita";
-      iconThemePackage = pkgs.adwaita-icon-theme;
-      cursorThemeName = "Adwaita";
-      cursorThemePackage = pkgs.adwaita-qt;
-      terminalColors = import ../../colorschemes/base16-solarized-light.nix; # Relative path from module
-      nvimColorscheme = "solarized";
-      wallpaperPath = "/path/to/your/light_wallpaper.png";
+      gtkThemePackage = null;
+      gnomeColorScheme = "prefer-light";
+      iconThemeName = "MoreWaita";
+      iconThemePackage = pkgs.morewaita-icon-theme;
+      cursorThemeName = "Bibata-Modern-Ice";
+      cursorThemePackage = pkgs.bibata-cursors;
+      nvimColorscheme = "catppuccin-light";
+      helixTheme = "catppuccin_latte";
+      ghosttyTheme = "Catppuccin Latte";
+      wallpaperPath = "~/Pictures/wallpapers/amber.png";
+      wantsAdwGtk3 = true;
     };
     dark = {
       gtkThemeName = "Adwaita-dark";
-      gtkThemePackage = pkgs.adwaita-qt;
-      iconThemeName = "Papirus";
-      iconThemePackage = pkgs.papirus-icon-theme;
-      cursorThemeName = "Bibata-Modern-Classic";
+      gtkThemePackage = null;
+      gnomeColorScheme = "prefer-dark";
+      iconThemeName = "MoreWaita";
+      iconThemePackage = pkgs.morewaita-icon-theme;
+      cursorThemeName = "Bibata-Modern-Ice";
       cursorThemePackage = pkgs.bibata-cursors;
-      terminalColors = import ../../colorschemes/base16-gruvbox-dark-hard.nix;
-      nvimColorscheme = "gruvbox";
-      wallpaperPath = "/path/to/your/dark_wallpaper.png";
+      nvimColorscheme = "catppuccin";
+      helixTheme = "catppuccin_mocha";
+      ghosttyTheme = "Catppuccin Mocha";
+      wallpaperPath = "~/Pictures/wallpapers/amber.png";
+      wantsAdwGtk3 = true;
     };
   };
 
@@ -42,9 +47,34 @@ in
       default = "dark"; # <<<--- STILL THE SINGLE SOURCE OF TRUTH DEFAULT
       description = "The global theme to apply.";
     };
+
+    # A read-only option to expose the full settings of the active theme.
+    # This allows other modules to easily access theme-specific values.
+    settings = lib.mkOption {
+      type = lib.types.attrs;
+      readOnly = true;
+      default = currentThemeSettings;
+      description = "The attribute set of the currently active theme.";
+    };
   };
 
   config = {
+    # Dynamically build the list of packages required by the *current* theme.
+    # This avoids installing unused theme packages.
+    home.packages =
+      # Base packages needed for theming infrastructure
+      [
+        pkgs.adwaita-qt # For Qt apps to use Adwaita
+        pkgs.libsForQt5.qt5ct # Qt5 configuration tool
+      ]
+      # Add packages from the current theme, filtering out any nulls.
+      ++ lib.optionals currentThemeSettings.wantsAdwGtk3 [ pkgs.adw-gtk3 ]
+      ++ (lib.filter (p: p != null) [
+        currentThemeSettings.gtkThemePackage
+        currentThemeSettings.iconThemePackage
+        currentThemeSettings.cursorThemePackage
+      ]);
+
     gtk = {
       enable = true;
       theme = {
@@ -61,6 +91,16 @@ in
       };
     };
 
+    dconf.settings = {
+      # This needs to be enabled for dconf settings to apply
+      # If you're using Gnome or a GTK-based desktop, this is often desirable.
+      # If not, you might omit this part or make it conditional.
+      # enable = true;
+      "org/gnome/desktop/interface" = {
+        color-scheme = currentThemeSettings.gnomeColorScheme;
+      };
+    };
+
     qt = {
       enable = true;
       platformTheme = {
@@ -69,14 +109,13 @@ in
       };
     };
 
-    systemTheme.settings = currentThemeSettings;
-  };
+    home.pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      package = currentThemeSettings.cursorThemePackage;
+      name = currentThemeSettings.cursorThemeName;
+      size = 24;
+    };
 
-  home.packages = with pkgs; [
-    adwaita-qt
-    adwaita-icon-theme
-    papirus-icon-theme
-    bibata-cursors
-    libsForQt5.qt5ct
-  ];
+  };
 }

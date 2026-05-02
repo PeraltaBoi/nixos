@@ -1,18 +1,19 @@
-{ ... }:
+{ config, ... }:
 
 {
   programs.ghostty = {
     enable = true;
     enableFishIntegration = true;
     settings = {
-      theme = "catppuccin-mocha";
-      font-size = 15;
+      theme = config.systemTheme.settings.ghosttyTheme;
+      font-size = 13;
       font-family = ''"JetBrains Mono"'';
       font-style = "ExtraBold";
       font-style-bold = "ExtraBold";
       window-decoration = false;
       confirm-close-surface = false;
       background-opacity = 1.0;
+      window-inherit-working-directory = false;
 
       adjust-box-thickness = "200%";
 

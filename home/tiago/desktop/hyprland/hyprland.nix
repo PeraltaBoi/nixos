@@ -161,13 +161,13 @@
       };
     };
   };
-  home.pointerCursor = {
-    gtk.enable = true;
-    # x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Ice";
-    size = 24;
-  };
+  # home.pointerCursor = {
+  #   gtk.enable = true;
+  #   # x11.enable = true;
+  #   package = pkgs.bibata-cursors;
+  #   name = "Bibata-Modern-Ice";
+  #   size = 24;
+  # };
 
   # programs.firefox = {
   #   enable = true;
@@ -182,20 +182,20 @@
   #   };
   # };
 
-  gtk = {
-    enable = true;
+  # gtk = {
+  #   enable = true;
 
-    iconTheme = {
-      package = pkgs.morewaita-icon-theme;
-      name = "MoreWaita";
-    };
-  };
+  #   iconTheme = {
+  #     package = pkgs.morewaita-icon-theme;
+  #     name = "MoreWaita";
+  #   };
+  # };
 
-  catppuccin = {
-    # enable = true;
-    # gtk.enable = true;
-    nushell.enable = true;
-    helix.enable = false;
-    flavor = "mocha";
-  };
+  # catppuccin = {
+  #   # enable = true;
+  #   # gtk.enable = true;
+  #   nushell.enable = true;
+  #   helix.enable = false;
+  #   flavor = "mocha";
+  # };
 }

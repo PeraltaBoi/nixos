@@ -18,5 +18,5 @@
     }];
   };
 
-  home.packages = with pkgs; [ roslyn-ls ];
+  # home.packages = with pkgs; [ roslyn-ls ];
 }

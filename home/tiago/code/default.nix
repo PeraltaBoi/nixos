@@ -9,7 +9,7 @@
     ./zellij.nix
     # ./vscode.nix
     # ./nvim.nix
-    ./neovim
-    ./emacs
+    # ./neovim
+    # ./emacs
   ];
 }

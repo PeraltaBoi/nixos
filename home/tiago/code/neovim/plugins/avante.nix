@@ -5,7 +5,7 @@
     plugins.avante = {
       enable = true;
       settings = {
-        mode = "legacy";
+        # mode = "legacy";
         provider = "copilot";
         # copilot = { model = "claude-3.5-sonnet"; };
         providers = {

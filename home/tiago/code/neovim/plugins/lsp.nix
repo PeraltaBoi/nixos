@@ -97,6 +97,9 @@
         omnisharp = {
           enable = true;
         };
+        hls = {
+          enable = true;
+        };
         jdtls = {
           enable = true;
           settings = {
