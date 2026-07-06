@@ -15,8 +15,10 @@
     pinta
     # gimp
     resources
-    fractal
+    # fractal
     # hypnotix
+    # lutris
+    bottles
     ffmpeg
     fragments
     p7zip
@@ -39,6 +41,7 @@
     reaper
     unzip
     guitarix
+    gnome-network-displays
 
     dconf-editor
     polkit_gnome
@@ -69,6 +72,7 @@
     ty
     ruff
     opencode
+    claude-code
 
     # dev tools
     lazygit

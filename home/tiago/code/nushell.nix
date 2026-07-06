@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.nushell = {
@@ -10,6 +10,8 @@
     environmentVariables = {
       EDITOR = "hx";
       JAVA_HOME = "${pkgs.jdk25}";
+      STEEL_HOME = "${config.xdg.dataHome}/steel";
+      STEEL_LSP_HOME = "${config.xdg.dataHome}/steel/lsp";
     };
     extraConfig = ''
       nitch

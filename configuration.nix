@@ -19,6 +19,14 @@
     "flakes"
   ];
 
+  nixpkgs.overlays = [
+    (_: prev: {
+      openldap = prev.openldap.overrideAttrs {
+        doCheck = false; # False is a bit more honest on x86_64 systems
+      };
+    })
+  ];
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -28,6 +36,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  networking.nameservers = [ "1.1.1.1" ];
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
