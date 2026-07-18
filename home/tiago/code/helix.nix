@@ -7,6 +7,7 @@
 {
   programs.helix = {
     enable = true;
+    # package = pkgs.steelix;
     package = (
       helix-steel.packages.${pkgs.system}.default.overrideAttrs (oldAttrs: {
         cargoBuildFlags = (oldAttrs.cargoBuildFlags or [ ]) ++ [
@@ -15,7 +16,7 @@
         ];
       })
     );
-    # package = pkgs.steelix;
+    # package = pkgs.helix;
     defaultEditor = true;
     settings = {
       editor = {

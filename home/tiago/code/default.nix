@@ -5,6 +5,7 @@
     ./ghostty.nix
     ./git.nix
     ./helix.nix
+    ./jujutsu.nix
     ./nushell.nix
     ./zellij.nix
     # ./vscode.nix

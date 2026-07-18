@@ -42,6 +42,7 @@
     unzip
     guitarix
     gnome-network-displays
+    inkscape
 
     dconf-editor
     polkit_gnome
@@ -60,6 +61,7 @@
     gamescope
     heroic
     javaPackages.compiler.openjdk25
+    direnv
 
     nitch
 
@@ -77,6 +79,7 @@
     # dev tools
     lazygit
     jujutsu
+    difftastic
     hoppscotch
     pkg-config
 
